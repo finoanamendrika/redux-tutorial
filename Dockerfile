@@ -1,32 +1,31 @@
 # Extending image
 FROM node:carbon
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Add a work directory
+WORKDIR /app
 
 # Versions
 RUN npm -v
 RUN node -v
 
+# Add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
 # Install app dependencies
-COPY package.json /usr/src/app/
-COPY package-lock.json /usr/src/app/
+COPY package.json ./
+COPY package-lock.json ./
 
 RUN npm install
+RUN npm install react-scripts@4.0.3 -g
 
-# Bundle app source
-COPY . /usr/src/app
+# Copy app files
+COPY . .
 
 # Port to listener
 EXPOSE 3000
 
 # Environment variables
-ENV NODE_ENV production
-ENV PORT 3000
-ENV PUBLIC_PATH "/"
-
-RUN npm run start:build
+ENV NODE_ENV dev
 
 # Main command
-CMD [ "npm", "run", "start:server" ]
+CMD [ "npm", "run", "start" ]
