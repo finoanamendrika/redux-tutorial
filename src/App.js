@@ -13,6 +13,7 @@ import {
   storeTodo,
   TodoSyncException,
 } from "./services/todo.service";
+import Todo from "./components/Todo";
 import "./App.css";
 
 function App() {
@@ -150,29 +151,12 @@ function App() {
           todos.length > 0 &&
           todos.map((todo, index) => {
             return (
-              <div
-                className={`App-todo ${
-                  todo.completed ? "App-todo--completed" : ""
-                }`}
-                key={`todo--${index}`}
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() =>
-                      handleOnToggleCompletedToto(todo.id, todo.completed)
-                    }
-                  />{" "}
-                  {todo.title}
-                </label>
-                <button
-                  type="button"
-                  onClick={() => handleOnDeleteTodo(todo.id)}
-                >
-                  <i className="fas fa-trash"></i>
-                </button>
-              </div>
+              <Todo
+                todo={todo}
+                key={`Todo--${index}`}
+                handleOnToggleCompletedToto={handleOnToggleCompletedToto}
+                handleOnDeleteTodo={handleOnDeleteTodo}
+              />
             );
           })}
       </div>
@@ -197,7 +181,14 @@ function App() {
           Made with <i className="fas fa-heart"></i> by Mendrika Rabeh.
         </small>
         <small>
-          Powered by <a href="https://jsonplaceholder.typicode.com/" target="_blank">Typicode JSONPlaceholder</a>
+          Powered by{" "}
+          <a
+            href="https://jsonplaceholder.typicode.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Typicode JSONPlaceholder
+          </a>
         </small>
       </div>
     </div>
